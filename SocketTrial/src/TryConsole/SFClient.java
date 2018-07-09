@@ -16,6 +16,8 @@ public class SFClient {
 		
 		System.out.print("Silahkan masukkan input: ");
 		String input = scan.nextLine();
+		string.writeUTF(input);
+		string.flush();
 		file = new File(input);
 		if(file.isFile() == true) {
 			System.out.println("File to send: "+file);
@@ -45,9 +47,7 @@ public class SFClient {
 		
 		else {
 			String Client = input;
-			System.out.println("Message to Send "+Client);
-			output.write(Client.getBytes());
-			output.flush();
+			System.out.println("Message to Send\t: "+Client);
 		}
 		output.close();
 		socket.close();

@@ -12,19 +12,29 @@ public class SFServer {
 		//Inisialisasi Input
 		InputStream input = socket.getInputStream();
 		BufferedReader read = new BufferedReader(new InputStreamReader(input));
+		DataInputStream in = new DataInputStream(socket.getInputStream());
 		StringBuilder string = new StringBuilder();
+		int jum = 0;
 		
 		//Inisialisasi Connection
 		connection connect = new connection();
 		connect.Connect();
-
-		String line = "";
+		
+		String send = in.readUTF();
+		File file = new File(send);
+		if(file.isFile() == true){
+			String line = "";
 			while ((line = read.readLine()) != null) {//jika barisdata ada
 				System.out.println("Data\t: "+line);
-				String Sql="INSERT INTO Socket values(null,'"+line+"','null,')";
+				jum = jum + Integer.parseInt(line);
+				String Sql="INSERT INTO Socket values(null,'"+line+"','"+jum+"')";
 				connect.saveData(Sql);     
 			}
-			socket.close();
-			server.close();
+			String hasil = String.valueOf(jum);
+			System.out.println("Hasil\t: "+hasil);
+		}
+		else {
+			System.out.println("Client\t: "+send);
+		}
 	}
 }
